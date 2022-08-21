@@ -4,7 +4,7 @@ import superjson from "superjson";
  * @param key The key you want to retrieve the value of.
  * @returns T | null The parsed superjson object or null if it doesn't exist.
  */
-function getObject<T>(key: string): T | null {
+export function getObject<T>(key: string): T | null {
   const serializedObjectOrNull: string | null = localStorage.getItem(key);
   return serializedObjectOrNull !== null
       ? superjson.parse<T>(serializedObjectOrNull)
@@ -15,7 +15,7 @@ function getObject<T>(key: string): T | null {
  * @param key The key you want to retrieve the value of.
  * @param object The object you want to stringify and save.
  */
-function setObject<T>(key: string, object: T): void {
+export function setObject<T>(key: string, object: T): void {
   localStorage.setItem(key, superjson.stringify(object));
 }
 
@@ -25,7 +25,7 @@ function setObject<T>(key: string, object: T): void {
  *                     on the previousObject.
  * @throws Error if the given key does not exist.
  */
-function updateObject<T>(key: string, handleUpdate: (previousObject: T) => T): void {
+export function updateObject<T>(key: string, handleUpdate: (previousObject: T) => T): void {
   const objectOrNull = getObject<T>(key);
 
   if (objectOrNull === null) {
@@ -42,7 +42,7 @@ function updateObject<T>(key: string, handleUpdate: (previousObject: T) => T): v
  *                     on the previousObject. This function will only be called if the key
  *                     already exists.
  */
-function upsertObject<T>(key: string, valueIfMissing: T, handleUpdate: (previousObject: T) => T): void {
+export function upsertObject<T>(key: string, valueIfMissing: T, handleUpdate: (previousObject: T) => T): void {
   const objectOrNull = getObject<T>(key);
 
   if (objectOrNull === null) {
