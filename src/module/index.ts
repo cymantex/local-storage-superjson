@@ -1,3 +1,1 @@
-import localStorageJson from "./localStorageJson";
-
-export default localStorageJson;
+export {default as localStorageJson} from "./localStorageJson";

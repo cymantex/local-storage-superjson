@@ -1,6 +1,6 @@
 {
   "name": "local-storage-superjson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "author": "Simon Eriksson <sim.eriksson@outlook.com>",
   "license": "MIT",
@@ -27,6 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "local-storage-superjson": "^1.0.1",
     "superjson": "^1.9.1"
   }
 }
