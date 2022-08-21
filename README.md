@@ -7,7 +7,7 @@ This package includes some CRUD utilities for saving [superjson](https://github.
 function getObject<T>(key: string): T | null
 function setObject<T>(key: string, object: T): void
 function updateObject<T>(key: string, handleUpdate: (previousObject: T) => T): void
-function upsertObject<T>(key: string, valueIfMissing: T, update: (previousObject: T) => T): void
+function upsertObject<T>(key: string, valueIfMissing: T, handleUpdate: (previousObject: T) => T): void
 
 export default {getObject, getObjectOrDefault, setObject, upsertObject};
 ```
