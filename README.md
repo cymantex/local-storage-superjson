@@ -13,46 +13,52 @@ function upsertObject<T>(key: string, valueIfMissing: T, handleUpdate: (previous
 ## Sample usage
 ```typescript
 import localStorageJson from "local-storage-superjson";
+// or import {getObject, setObject, ...} from "local-storage-superjson";
 
-type User = {username: string, email: string}
+type Score = {points: number, accuracy: string}
 
-// Stores the given user into localStorage with help of superjson.stringify.
-localStorageJson.setObject<User[]>("users", [{
-  username: "user1",
-  email: "user1@email.com"
+// Stores the given object into localStorage with help of superjson.stringify.
+localStorageJson.setObject<Score[]>("scores", [{
+  points: 85,
+  accuracy: "65%"
 }]);
 
-// You can then read these users with getObject
-const users = localStorageJson.getObject<User[]>("users");
+// You can then read this object with getObject
+const scores = localStorageJson.getObject<Score[]>("scores");
 // [{
-//   username: "user1",
-//   email: "user1@email.com"
+//   points: 85,
+//   accuracy: "65%"
 // }]
 
-// You can also update an existing object with updateObject. 
+// You can also update an existing object with updateObject.
 // This will however throw an Error if the key does not exist.
-const userToAdd = {
-  username: "user2",
-  email: "user2@email.com"
-}
-localStorageJson.updateObject<User[]>("users", (previousUsers) => [
-  ...previousUsers,
-  userToAdd
+const scoreToAdd = {
+  points: 50,
+  accuracy: "100%"
+};
+localStorageJson.updateObject<Score[]>("scores", previousScores => [
+  ...previousScores,
+  scoreToAdd
 ]);
 
-// upsertObject can be used instead if you're not sure if the key exists or not
-localStorageJson.upsertObject<User[]>("admin-users", userToAdd /*valueIfMissing*/, () => {});
-
-// When the key already exists the handleUpdate function will be called.
-localStorageJson.upsertObject<User[]>("admin-users", userToAdd, (previousUsers) => [
+// upsertObject can be used instead if you're not sure if the key exists or not.
+// If the given key is not in localStorage it will set the given valueIfMissing.
+localStorageJson.upsertObject<Score[]>("easy-scores", /*valueIfMissing:*/ [scoreToAdd], previousUsers => [
   ...previousUsers,
-  userToAdd
+  scoreToAdd
+]);
+
+// When the key already exists the handleUpdate function will be called to
+// provide a new object based on the previousObject.
+localStorageJson.upsertObject<Score[]>("easy-scores", [scoreToAdd], /*handleUpdate:*/ previousUsers => [
+  ...previousUsers,
+  scoreToAdd
 ]);
 // [{
-//   username: "user2",
-//   email: "user2@email.com"
+//   points: 50,
+//   accuracy: "100%"
 // }, {
-//   username: "user2",
-//   email: "user2@email.com"
+//   points: 50,
+//   accuracy: "100%"
 // }]
 ```
