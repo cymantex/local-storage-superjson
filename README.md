@@ -32,27 +32,27 @@ const scores = localStorageJson.getObject<Score[]>("scores");
 
 // You can also update an existing object with updateObject.
 // This will however throw an Error if the key does not exist.
-const scoreToAdd = {
+const currentScore = {
   points: 50,
   accuracy: "100%"
 };
 localStorageJson.updateObject<Score[]>("scores", previousScores => [
   ...previousScores,
-  scoreToAdd
+  currentScore
 ]);
 
 // upsertObject can be used instead if you're not sure if the key exists or not.
 // If the given key is not in localStorage it will set the given valueIfMissing.
-localStorageJson.upsertObject<Score[]>("easy-scores", /*valueIfMissing:*/ [scoreToAdd], previousUsers => [
-  ...previousUsers,
-  scoreToAdd
+localStorageJson.upsertObject<Score[]>("easy-scores", /*valueIfMissing:*/ [currentScore], previousScores => [
+  ...previousScores,
+  currentScore
 ]);
 
 // When the key already exists the handleUpdate function will be called to
 // provide a new object based on the previousObject.
-localStorageJson.upsertObject<Score[]>("easy-scores", [scoreToAdd], /*handleUpdate:*/ previousUsers => [
-  ...previousUsers,
-  scoreToAdd
+localStorageJson.upsertObject<Score[]>("easy-scores", [currentScore], /*handleUpdate:*/ previousScores => [
+  ...previousScores,
+  currentScore
 ]);
 // [{
 //   points: 50,
